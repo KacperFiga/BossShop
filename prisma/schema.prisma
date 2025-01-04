@@ -8,17 +8,18 @@ datasource db {
 }
 
 model Product {
-  id              String                 @id @default(uuid())
-  ean             Int
-  name            String
-  regular_price   Int
-  promo_price     Int
-  currency        String                 @default("PLN")
-  description     String
-  reviews         Review[]
-  images          Images[]
-  categories      CategoriesOnProducts[]
-  Product_details Product_details[]
+  id                String                 @id @unique @default(uuid())
+  ean               Int
+  name              String
+  regular_price     Int
+  promo_price       Int
+  currency          String                 @default("PLN")
+  description       String
+  short_description String
+  reviews           Review[]
+  images            Images[]
+  categories        CategoriesOnProducts[]
+  Product_details   Product_details?
 }
 
 model Categories {
@@ -41,13 +42,15 @@ model Review {
   Product   Product? @relation(fields: [productId], references: [id])
   productId String?
   author    String
+  content   String
   rating    Int
 }
 
 model Product_details {
-  id            String   @id @default(uuid())
+  id            String   @id @unique @default(uuid())
   shipping_time String   @default("24 h")
-  productId     String?
+  delivery_cost String   @default("4 EUR")
+  productId     String?  @unique
   Product       Product? @relation(fields: [productId], references: [id])
 }
 

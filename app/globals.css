@@ -16,3 +16,8 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: #735024 !important;  
+}
