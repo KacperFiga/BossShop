@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from 'next/link'
 import prisma from '@/lib/db'
 
 import DesktopNavbar from "@/app/components/NavbarDesktop/index"
@@ -18,7 +19,9 @@ export default async function index() {
     <>
     <header className="p-2 pt-4 border-b border-6 border-gray-300 mx-auto">
       <div className='container flex mx-auto'>
-        <h1 className="font-semibold italic md:text-xl flex items-center">Boss<span className="text-secondary">Zone</span></h1>
+        <h1 className="font-semibold italic md:text-xl flex items-center">
+           <Link href="/">Boss<span className="text-secondary">Zone</span> </Link>
+       </h1>
         <div className="flex ml-auto gap-2 md:gap-4 items-center">
 
         <Favorites/>

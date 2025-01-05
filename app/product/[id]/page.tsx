@@ -36,7 +36,10 @@ export default async function page(context: { params: any; }) {
             <div className="container p-2">
                 <div className="flex flex-col gap-2">
 
+                <div className="flex">
                 <h1 className="text-xl font-bold">{product.name}</h1>
+                <Icon icon="tabler:heart" width="30" height="30"  style={{color: '#cd3737'}} className='ml-auto self-start' />
+                </div>
                 <p>
                   {product.short_description}
                 </p>

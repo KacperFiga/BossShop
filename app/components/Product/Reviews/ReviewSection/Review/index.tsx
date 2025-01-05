@@ -1,10 +1,10 @@
 import React from 'react'
 import Stars from "@/app/components/global/Stars"
-import { ReviewI } from '@/app/types'
+import { ReviewComponentPropsI } from '../..'
 
 
 
-export const Review:React.FC<ReviewCardProps> = ({review}) =>{
+export const Review:React.FC<ReviewComponentPropsI> = ({review}) =>{
 
   return (
     <div key={review.id} className="border-2 py-4 border-gray-150 p-2 mt-4 -mx-2 rounded-md flex flex-col gap-2">

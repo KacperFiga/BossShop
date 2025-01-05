@@ -22,7 +22,7 @@ export const ReviewsSection:React.FC<ReviewsSectionPropsI> = ({reviews, avgRevie
             
             <div className='mt-2'>
             {Object.keys(percentageRatings).map(rating=>(
-            <GroupedReviews rating={rating} percentageRatings={percentageRatings}/>
+            <GroupedReviews key={rating} rating={rating} percentageRatings={percentageRatings}/>
             ))}
             </div>
 
@@ -30,7 +30,7 @@ export const ReviewsSection:React.FC<ReviewsSectionPropsI> = ({reviews, avgRevie
     </div>
 
     {reviews.map(review=>(
-       <Review  review={review}/>
+       <Review key={review.id} review={review}/>
     ))}
 </div>
   )
