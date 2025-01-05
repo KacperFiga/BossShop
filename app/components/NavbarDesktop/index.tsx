@@ -4,7 +4,7 @@ import React from 'react'
 import prisma from '@/lib/db'
 import Link from 'next/link';
 
-export default async function index() {
+export const NavbarDesktop = async () => {
   const categories = await prisma.categories.findMany();
   return (
     <nav className="container mx-auto hidden md:block">

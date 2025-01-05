@@ -1,9 +1,9 @@
 import React from 'react';
 import { Icon } from "@iconify/react";
 
-import ProductImagesSlider from "@/app/components/Product/ProductSlider";
-import AddToCartSection from "@/app/components/Product/AddToCartSection"
-import AvgReviews from "@/app/components/Product/AvgReviews"
+import {ProductImagesSlider} from "@/app/components/Product/ProductSlider";
+import {AddToCartSection} from "@/app/components/Product/AddToCartSection"
+import {AvgReviews} from "@/app/components/Product/AvgReviews"
 import {ReviewsSection} from "@/app/components/Product/Reviews/ReviewSection/index"
 
 import { ProductI } from '@/app/types';

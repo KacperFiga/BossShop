@@ -2,12 +2,12 @@ import React from 'react'
 import Link from 'next/link'
 import prisma from '@/lib/db'
 
-import DesktopNavbar from "@/app/components/NavbarDesktop/index"
-import Favorites from "@/app/components/favorites"
-import Cart from "@/app/components/cartSidebar"
-import MobileNavbar from "@/app/components/NavbarMobile"
+import {NavbarDesktop} from "@/app/components/NavbarDesktop/index"
+import {FavoritesSidebar} from "@/app/components/favorites"
+import {CartSidebar} from "@/app/components/cartSidebar"
+import {MobileNavbar} from "@/app/components/NavbarMobile"
 
-export default async function index() {
+export const Header = async () => {
 
   const categories = await prisma.categories.findMany({
     where:{
@@ -19,18 +19,18 @@ export default async function index() {
     <>
     <header className="p-2 pt-4 border-b border-6 border-gray-300 mx-auto">
       <div className='container flex mx-auto'>
-        <h1 className="font-semibold italic md:text-xl flex items-center">
+        <h1 className="cursor-pointer font-semibold italic md:text-xl flex items-center">
            <Link href="/">Boss<span className="text-secondary">Zone</span> </Link>
        </h1>
         <div className="flex ml-auto gap-2 md:gap-4 items-center">
 
-        <Favorites/>
-        <Cart/>
+        <FavoritesSidebar/>
+        <CartSidebar/>
         <MobileNavbar categories={categories}/>
 
         </div>
       </div>
-     <DesktopNavbar/>
+     <NavbarDesktop/>
     </header>
     </>
   )

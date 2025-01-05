@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 
-export default function Index() {
+export const AddToCartSection = () => {
     const [qty, setQty] = useState<number>(1);
 
     const setQuantity = (e: React.MouseEvent<HTMLButtonElement> | React.ChangeEvent<HTMLInputElement>) => {

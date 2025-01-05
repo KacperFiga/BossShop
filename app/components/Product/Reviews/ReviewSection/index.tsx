@@ -1,7 +1,7 @@
 import React from 'react'
 
 import {Review} from "@/app/components/Product/Reviews/ReviewSection/Review"
-import Stars from "@/app/components/global/Stars"
+import {Stars} from "@/app/components/global/Stars"
 import { ReviewsSectionPropsI } from '..'
 import { GroupedReviews } from './Review/GroupedReviews/GroupedReviews'
 
@@ -15,7 +15,7 @@ export const ReviewsSection:React.FC<ReviewsSectionPropsI> = ({reviews, avgRevie
         <p className="font-thin text-gray-700 text-sm">In-store reviews are not checked for authenticity before they are published. They may therefore also come from consumers who did not actually buy/use the products being assessed.</p>
             <div className="flex gap-1 mt-2">
                 <p> {avgReviews} </p>
-                <Stars avgReview={avgReviews}/>
+                <Stars starsNumber={avgReviews}/>
                 <p>based on {reviewsNumber} { reviewsNumber > 1 ? "reviews" : "review" } </p>
             </div>
 

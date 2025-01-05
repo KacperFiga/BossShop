@@ -1,13 +1,15 @@
 import React from 'react'
 import { Icon } from "@iconify/react";
 
+import {StarsPropsI} from "@/app/types/index"
 
-export default function index({avgReview}) {
+
+export const Stars:React.FC<StarsPropsI> = ({starsNumber}) => {
   return (
     <div className="flex items-center">
     {Array.from({ length: 5 }, (_, index) => {
         const starPosition = index + 1;
-        if (starPosition <= Math.floor(avgReview)) {
+        if (starPosition <= Math.floor(starsNumber)) {
             return (
                 <Icon
                     key={index}
@@ -18,8 +20,8 @@ export default function index({avgReview}) {
                 />
             );
         } else if (
-            starPosition === Math.ceil(avgReview) &&
-            !Number.isInteger(avgReview)
+            starPosition === Math.ceil(starsNumber) &&
+            !Number.isInteger(starsNumber)
         ) {
             return (
                 <Icon

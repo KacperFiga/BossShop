@@ -3,7 +3,7 @@
 import React from 'react'
 import { Icon } from "@iconify/react";
 
-export default function index() {
+export const CartSidebar = () => {
 
   return (
     <button className='flex flex-col items-center'>
