@@ -4,7 +4,7 @@ import { Icon } from "@iconify/react";
 import ProductImagesSlider from "@/app/components/Product/ProductSlider";
 import AddToCartSection from "@/app/components/Product/AddToCartSection"
 import AvgReviews from "@/app/components/Product/AvgReviews"
-import Stars from "@/app/components/global/Stars"
+import {ReviewsSection} from "@/app/components/Product/Reviews/ReviewSection/index"
 
 import { ProductI } from '@/app/types';
 
@@ -19,6 +19,16 @@ export default async function page(context: { params: any; }) {
 
     const data = await res.json();
     const product:ProductI = data;
+
+    const groupedRatings = product.reviews.reduce((acc, review) => {
+        acc[review.rating] = (acc[review.rating] || 0) + 1;
+        return acc;
+      }, {});
+
+      const percentageRatings = Object.entries(groupedRatings).reduce((acc, [rating, count]) => {
+        acc[rating] = Math.round((count / product.reviews.length) * 100) + '%';
+        return acc;
+      }, {});
 
     return (
         <div className="container mx-auto p-2 pt-4">
@@ -56,27 +66,15 @@ export default async function page(context: { params: any; }) {
 
                 </div>
 
-
                 <AddToCartSection/>
-
                 <div>
 
                 <p className="mt-8">{product.description}</p>
 
                 </div>
 
-                
-                <div className="mt-6">
-                    <p className="mb-2 font-semibold text-lg border-b-[1px] pb-2 border-gray-150 text-secondary">Reviews</p>
-                    {product.reviews.map(review=>(
-                        <div key={review.id}>
-                            <Stars avgReview={review.rating}/>
-                            <p>{review.author}</p>
-                            <p>{review.rating}</p>
-                            <p>{review.content}</p>
-                        </div>
-                    ))}
-                </div>
+                <ReviewsSection reviews={product.reviews} avgReviews={product.avgReview} reviewsNumber={product.reviews.length} percentageRatings={percentageRatings}/>
+              
             </div>
         </div>
     );

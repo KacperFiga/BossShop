@@ -1,4 +1,4 @@
-export interface review {
+export interface ReviewI {
     id: string,
     productId: string,
     author: string,
@@ -17,6 +17,6 @@ export interface ProductI {
         shipping_time: string;
         delivery_cost: string;
     };
-    reviews: review[]
+    reviews: ReviewI[]
     avgReview: number
 };
