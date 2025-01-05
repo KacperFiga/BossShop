@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
 :root {
   --background: #ffff;
   --foreground: #171717;
@@ -19,5 +27,5 @@ body {
 
 .swiper-button-next,
 .swiper-button-prev {
-  color: #735024 !important;  
+  color: #735024 !important;
 }

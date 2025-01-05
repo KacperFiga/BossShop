@@ -8,7 +8,7 @@ import { GroupedReviews } from './Review/GroupedReviews/GroupedReviews'
 
 export const ReviewsSection:React.FC<ReviewsSectionPropsI> = ({reviews, avgReviews, reviewsNumber, percentageRatings}) => {
   return (
-    <div className="mt-6">
+    <div className="mt-6 md:grid grid-cols-[30%,50%] justify-between">
 
     <div>
         <p className="mb-2 font-semibold text-lg border-b-[1px] pb-2 border-gray-150 text-secondary">Customer Reviews</p>
@@ -29,9 +29,12 @@ export const ReviewsSection:React.FC<ReviewsSectionPropsI> = ({reviews, avgRevie
 
     </div>
 
+    <div>
     {reviews.map(review=>(
        <Review key={review.id} review={review}/>
     ))}
+    </div>
+
 </div>
   )
 }

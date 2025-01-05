@@ -32,8 +32,10 @@ export default async function page(context: { params: any; }) {
 
     return (
         <div className="container mx-auto p-2 pt-4">
-            <ProductImagesSlider images={product.images} />
-            <div className="container p-2">
+            <div className="md:grid grid-cols-[65%,30%] justify-around">
+                <ProductImagesSlider images={product.images} />
+
+            <div className="container p-2 md:w-full">
                 <div className="flex flex-col gap-2">
 
                 <div className="flex">
@@ -70,15 +72,19 @@ export default async function page(context: { params: any; }) {
                 </div>
 
                 <AddToCartSection/>
+            </div>
+            </div>
+
+
                 <div>
 
-                <p className="mt-8">{product.description}</p>
+
+                <p className="mt-8 md:text-lg font-medium md:max-w-[65%]">{product.description}</p>
 
                 </div>
 
                 <ReviewsSection reviews={product.reviews} avgReviews={product.avgReview} reviewsNumber={product.reviews.length} percentageRatings={percentageRatings}/>
               
-            </div>
         </div>
     );
 }
