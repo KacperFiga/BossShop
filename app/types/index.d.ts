@@ -13,6 +13,7 @@ export interface ProductI {
     description: string;
     short_description: string;
     images: ProductImageI[];
+    promo_price: number;
     Product_details: {
         shipping_time: string;
         delivery_cost: string;

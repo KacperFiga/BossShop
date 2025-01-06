@@ -46,9 +46,17 @@ export default async function page(context: { params: any; }) {
                   {product.short_description}
                 </p>
                 <div>
-                <p className="text-lg font-semibold">
+                <p className={`${product.promo_price > 0 ? 'text-md line-through' : 'text-lg font-semibold' }`}>
                     {product.regular_price} {product.currency}
                 </p>
+
+                {product.promo_price > 0 ?
+                 <p className="text-xl font-semibold">
+                    {product.promo_price} {product.currency}
+                </p> 
+                : null}
+                
+
                 </div>
                     <AvgReviews reviewsNumber={product.reviews.length} avgReview={product.avgReview}/>
 
@@ -88,3 +96,4 @@ export default async function page(context: { params: any; }) {
         </div>
     );
 }
+
