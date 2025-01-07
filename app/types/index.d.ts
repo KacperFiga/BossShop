@@ -6,24 +6,31 @@ export interface ReviewI {
     rating: number
 }
 
-export interface ProductI {
-    name: string;
-    regular_price: string;
-    currency: string;
+export interface ProductExtendedI extends ProductI {
     description: string;
     short_description: string;
     images: ProductImageI[];
-    promo_price: number;
-    Product_details: {
-        shipping_time: string;
-        delivery_cost: string;
-    };
     reviews: ReviewI[]
     avgReview: number
+    Product_details: ProductDetailsI
+};
+
+export interface ProductI {
+    id: string;
+    name: string;
+    regular_price: number;
+    currency: string;
+    images: ProductImageI[];
+    promo_price: number;
 };
 
 interface StarsPropsI{
     starsNumber: number
+}
+
+interface ProductDetailsI {
+    shipping_time: string;
+    delivery_cost: string;
 }
 
 interface AvgReviewsPropsI {

@@ -6,7 +6,11 @@ import {AddToCartSection} from "@/app/components/Product/AddToCartSection"
 import {AvgReviews} from "@/app/components/Product/AvgReviews"
 import {ReviewsSection} from "@/app/components/Product/Reviews/ReviewSection/index"
 
-import { ProductI } from '@/app/types';
+import { ProductExtendedI } from '@/app/types';
+import { PricingSection } from '@/app/components/Product/PricingSection';
+
+
+
 
 export default async function page(context: { params: any; }) {
     const { params } =  context;
@@ -16,9 +20,9 @@ export default async function page(context: { params: any; }) {
     if (!res.ok) {
         return <div>Product not found.</div>;
     }
-
     const data = await res.json();
-    const product:ProductI = data;
+    const product:ProductExtendedI = data;
+
 
     const groupedRatings = product.reviews.reduce((acc, review) => {
         acc[review.rating] = (acc[review.rating] || 0) + 1;
@@ -46,15 +50,7 @@ export default async function page(context: { params: any; }) {
                   {product.short_description}
                 </p>
                 <div>
-                <p className={`${product.promo_price > 0 ? 'text-md line-through' : 'text-lg font-semibold' }`}>
-                    {product.regular_price} {product.currency}
-                </p>
-
-                {product.promo_price > 0 ?
-                 <p className="text-xl font-semibold">
-                    {product.promo_price} {product.currency}
-                </p> 
-                : null}
+               <PricingSection promoPrice={product.promo_price} regularPrice={product.regular_price} currency={product.currency}/>
                 
 
                 </div>
@@ -68,12 +64,12 @@ export default async function page(context: { params: any; }) {
 
                     <div className="flex mt-4 items-center">
                         <Icon icon="tabler:clock" width="20" height="20" />
-                        <p className="ml-1">Delivery time: {product.Product_details.shipping_time}</p>
+                        <p className="ml-1">Delivery time: {product.Product_details?.shipping_time || "N/A" }</p>
                     </div>
 
                     <div className="flex mt-1 items-center">
                         <Icon icon="tabler:truck-delivery" width="20" height="20" />
-                        <p className="ml-1">Delivery cost: {product.Product_details?.delivery_cost}</p>
+                        <p className="ml-1">Delivery cost: {product.Product_details?.delivery_cost || "N/A"}</p>
                     </div>
 
 

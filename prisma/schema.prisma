@@ -33,7 +33,7 @@ model Images {
   id        String   @id @default(uuid())
   url       String
   Product   Product? @relation(fields: [productId], references: [id])
-  productId String?
+  productId String
   alt       String
 }
 

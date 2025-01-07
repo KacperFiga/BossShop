@@ -1,5 +1,7 @@
 import React from 'react'
 import prisma from '@/lib/db'
+import Image from 'next/image';
+import { ProductCard } from '@/app/components/Product/ProductCard';
 
 export default async function page(context: PromiseLike<{ id: any; }> | { id: any; }) {
     const {id} = await context;
@@ -19,6 +21,7 @@ export default async function page(context: PromiseLike<{ id: any; }> | { id: an
                 regular_price: true,
                 promo_price: true,
                 currency: true,
+                images: true
               },
             },
           },
@@ -32,11 +35,23 @@ export default async function page(context: PromiseLike<{ id: any; }> | { id: an
 
 
   return (
-    <div className='container mx-auto'>
-        <h1> {category.category_name} </h1>
-        <div>
-            {category.products.map(({Product})=>(<div key={Product.id}>{Product.name}</div>))}
-        </div>
+<div>
+  <div className="bg-gray-100 pt-14">
+    <div className='container mx-auto text-2xl font-bold px-4 pb-4'>{category.category_name} </div>
+  </div>
+
+  <div className="container mx-auto px-4 mt-4">
+    {/* space for filters */}
+    <div className='grid grid-cols-2 gap-4'>
+
+  {category.products.map(product=>(
+   <ProductCard product={product.Product}/>
+  ))}
+
     </div>
+
+  </div>
+</div>
+    
   )
 }
