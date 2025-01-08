@@ -7,7 +7,6 @@ import { ActionButtons } from './ActionButtons'
 import { ProductCardImage } from './ProductCardImage'
 
 
-
 interface ProductCardI {
     product: ProductI
 }
@@ -25,7 +24,7 @@ export const ProductCard:React.FC<ProductCardI> = ({product})=> {
       </div>
       
        
-      <p className="text-gray-700 font-bold text-sm mt-2">{product.name}</p>
+      <p className="text-gray-700 font-bold text-sm mt-4">{product.name}</p>
     </Link>
   
     <PricingSection

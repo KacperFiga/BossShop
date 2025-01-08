@@ -2,33 +2,16 @@
 
 import { ProductImageI } from '@/app/types'
 import Image from 'next/image'
-import React, {useState, useEffect} from 'react'
+import React from 'react'
+import { useWindowWidth } from '@/app/hooks/useWindowWidth'
 
 interface ProductCardImagePropsI {
     images: ProductImageI[]
 }
 
-type AppWidthT =  number;
 
-export const ProductCardImage:React.FC<ProductCardImagePropsI> = ({images}) => {
-    const useWindowSize = () => {
-        const [appWidth, setAppWidth] = useState<AppWidthT>(767);
-      
-        useEffect(() => {
-          function handleResize() {
-            setAppWidth(window.innerWidth);
-          }
-          
-          window.addEventListener("resize", handleResize);
-           
-          handleResize();
-          
-          return () => window.removeEventListener("resize", handleResize);
-        }, []); 
-        return appWidth;
-      }
-    
-    const size = useWindowSize();
+export const ProductCardImage:React.FC<ProductCardImagePropsI> = ({images}) => {    
+    const size = useWindowWidth()
 
 
   return (
