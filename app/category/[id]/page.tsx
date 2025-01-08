@@ -42,15 +42,21 @@ export default async function page(context: PromiseLike<{ id: any; }> | { id: an
 
   <div className="container mx-auto px-4 mt-4">
     {/* space for filters */}
-    <div className='grid grid-cols-2 gap-4'>
+    sortowanie
+    <div className='md:grid md:grid-cols-[15%,85%]'>
+
+    <div> filtry</div>
+    <div className='grid grid-cols-2 gap-4 md:grid-cols-3'>
 
   {category.products.map(product=>(
-   <ProductCard product={product.Product}/>
+   <ProductCard product={product.Product} key={product.Product.id}/>
   ))}
 
     </div>
 
   </div>
+  </div>
+
 </div>
     
   )
