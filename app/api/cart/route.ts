@@ -28,9 +28,6 @@ export async function POST(req: Request) {
             },
             include: {
                 products: {
-                    select: {
-                        quantity: true,
-                    },
                     include: {
                         Product: true,
                     },
@@ -41,6 +38,7 @@ export async function POST(req: Request) {
         if (!cart) {
             return new Response(JSON.stringify({ message: "Cart not found" }), { status: 404 });
         }
+
 
         return new Response(JSON.stringify({ cart }), { status: 200 });
     } catch (error) {
