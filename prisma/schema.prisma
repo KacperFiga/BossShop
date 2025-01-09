@@ -20,6 +20,7 @@ model Product {
   images            Images[]
   categories        CategoriesOnProducts[]
   Product_details   Product_details?
+  CartProduct       CartProduct[]
 }
 
 model Categories {
@@ -61,4 +62,21 @@ model CategoriesOnProducts {
   Categories Categories @relation(fields: [categoryId], references: [id])
 
   @@id([productId, categoryId])
+}
+
+model Cart {
+  id         String        @id @default(uuid())
+  products   CartProduct[]
+  total_cost Int           @default(0)
+}
+
+model CartProduct {
+  id        String  @id @default(uuid())
+  cartId    String
+  productId String
+  quantity  Int     @default(1)
+  Cart      Cart    @relation(fields: [cartId], references: [id])
+  Product   Product @relation(fields: [productId], references: [id])
+
+  @@unique([cartId, productId])
 }

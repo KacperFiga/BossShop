@@ -54,3 +54,21 @@ interface CategoryI {
     is_home_page: boolean;
     category_name: string;
 }
+
+
+interface CartProduct {
+    id: string;
+    cartId: string;
+    productId: string;
+    quantity: number;
+    Cart: string;
+    Product: string;
+}
+
+interface CartI{
+    cart:{
+        id: string
+        products: CartProduct[]
+        total_cost: number;
+    }
+}
