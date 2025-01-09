@@ -1,6 +1,5 @@
 import React from 'react'
 import prisma from '@/lib/db'
-import Image from 'next/image';
 import { ProductCard } from '@/app/components/Product/ProductCard';
 
 export default async function page(context: PromiseLike<{ id: any; }> | { id: any; }) {
@@ -30,7 +29,6 @@ export default async function page(context: PromiseLike<{ id: any; }> | { id: an
     });
     
   
-
     const category = categoryData[0];
 
 
