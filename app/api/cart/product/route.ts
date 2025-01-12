@@ -1,4 +1,6 @@
+import { checkCartExists, checkIsProductAlreadyInCart, checkProductExists, updateProductQuantity } from "@/lib/cart"
 import prisma from "@/lib/db"
+import { Rewrite } from "next/dist/lib/load-custom-routes"
 
 export const GET = async () =>{
     return new Response(JSON.stringify({'message':'GET method not allowed'}),{status:400})
@@ -9,12 +11,17 @@ export const POST = async (req: Request) => {
     try{
         const { cart_id, product_id, quantity } = body
 
-      const product = await prisma.$transaction(async (prisma) => {
-        const cart = await prisma.cart.findUnique({ where: { id: cart_id } });
+        const product = await prisma.$transaction(async (prisma) => {
+        const cart = checkCartExists(cart_id);
         if (!cart) throw new Error("Cart not found");
       
-        const product = await prisma.product.findUnique({ where: { id: product_id } });
-        if (!product) throw new Error("Product not found");
+        const productExists = await checkProductExists(product_id)
+        if (!productExists) throw new Error("Product not found");
+        
+        const isProductAlreadyInCart = await checkIsProductAlreadyInCart(cart_id, product_id);
+        if(isProductAlreadyInCart){
+          throw new Error('To update product quantity in cart, use patch method')
+        }
 
       
         return await prisma.cartProduct.create({
@@ -25,15 +32,12 @@ export const POST = async (req: Request) => {
           },
         });
       });
-      
 
-        console.log(product);
-
-        return new Response(JSON.stringify({'product':product }),{status:200})
+        return new Response(JSON.stringify({'product':product }),{status:201})
 
     }catch(err){
-        console.log(err)
-        return new Response(JSON.stringify({'message':err}),{status:400})
+        console.error(err.message)
+        return new Response(JSON.stringify({'message':err.message}),{status:400})
 
     }
 }
@@ -44,18 +48,15 @@ export const DELETE = async (req: Request) => {
 
   try {
     const result = await prisma.$transaction(async (prisma) => {
-      const cartProduct = await prisma.cartProduct.findUnique({
-        where: {
-          cartId_productId: {
-            cartId: cart_id,
-            productId: product_id,
-          },
-        },
-      });
+      const productExists = await checkProductExists(product_id)
+      if (!productExists) throw new Error("Product not found");
+      
+      const isProductAlreadyInCart = await checkIsProductAlreadyInCart(cart_id, product_id);
 
-      if (!cartProduct) {
+      if (!isProductAlreadyInCart) {
         throw new Error("Product not found in cart.");
       }
+    
 
       return await prisma.cartProduct.delete({
         where: {
@@ -71,5 +72,29 @@ export const DELETE = async (req: Request) => {
   } catch (error) {
     console.error("Error:", error);
     return new Response(JSON.stringify({ message: error.message || "Unable to delete product" }), { status: 400 });
+  }
+};
+
+export const PATCH = async (req: Request) => {
+  const body = await req.json();
+  try {
+    const { product_id, cart_id, quantity } = body;
+
+    const cart = await checkCartExists(cart_id);
+    if (!cart) throw new Error("Cart not found");
+
+    const productExists = await checkProductExists(product_id);
+    if (!productExists) throw new Error("Product not found");
+
+    const isProductInCart = await checkIsProductAlreadyInCart(cart_id, product_id);
+
+    if (isProductInCart) {
+      const updatedProduct = await updateProductQuantity(cart_id, product_id, quantity);
+      return new Response(JSON.stringify({ 'product': updatedProduct }), { status: 201 });
+    }
+
+  } catch (error) {
+    console.error(error.message);
+    return new Response(JSON.stringify({ 'message': "Something went wrong" }), { status: 500 });
   }
 };
