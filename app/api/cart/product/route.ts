@@ -1,6 +1,6 @@
-import { checkCartExists, checkIsProductAlreadyInCart, checkProductExists, updateProductQuantity } from "@/lib/cart"
+import { checkCartExists, checkIsProductAlreadyInCart, checkProductExists, updateProductQuantity } from "@/app/utils/cart"
 import prisma from "@/lib/db"
-import { Rewrite } from "next/dist/lib/load-custom-routes"
+
 
 export const GET = async () =>{
     return new Response(JSON.stringify({'message':'GET method not allowed'}),{status:400})
@@ -18,7 +18,7 @@ export const POST = async (req: Request) => {
         const productExists = await checkProductExists(product_id)
         if (!productExists) throw new Error("Product not found");
         
-        const isProductAlreadyInCart = await checkIsProductAlreadyInCart(cart_id, product_id);
+        const isProductAlreadyInCart = await checkIsProductAlreadyInCart({cart_id, product_id});
         if(isProductAlreadyInCart){
           throw new Error('To update product quantity in cart, use patch method')
         }
@@ -51,7 +51,7 @@ export const DELETE = async (req: Request) => {
       const productExists = await checkProductExists(product_id)
       if (!productExists) throw new Error("Product not found");
       
-      const isProductAlreadyInCart = await checkIsProductAlreadyInCart(cart_id, product_id);
+      const isProductAlreadyInCart = await checkIsProductAlreadyInCart({cart_id, product_id});
 
       if (!isProductAlreadyInCart) {
         throw new Error("Product not found in cart.");
@@ -89,7 +89,7 @@ export const PATCH = async (req: Request) => {
     const isProductInCart = await checkIsProductAlreadyInCart(cart_id, product_id);
 
     if (isProductInCart) {
-      const updatedProduct = await updateProductQuantity(cart_id, product_id, quantity);
+      const updatedProduct = await updateProductQuantity({cart_id, product_id, quantity:Number(quantity)});
       return new Response(JSON.stringify({ 'product': updatedProduct }), { status: 201 });
     }
 
