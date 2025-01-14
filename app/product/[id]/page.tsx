@@ -75,7 +75,7 @@ export default async function page(context: { params: any; }) {
 
                 </div>
 
-                <AddToCartSection/>
+                <AddToCartSection productId={product.id}/>
             </div>
             </div>
 
