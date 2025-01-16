@@ -1,4 +1,5 @@
 import prisma from "@/lib/db"
+import Cookie from "js-cookie"
 
 interface checkIsProductAlreadyInCartI {
   cart_id: string,
@@ -47,4 +48,19 @@ export const updateProductQuantity = async ({cart_id, product_id, quantity}:upda
         }
       })
       return _product;
+}
+
+export const getCart = async () => {
+  const cartId = Cookie.get('cart_id');
+  if(cartId){
+    const cart = await fetch(`/api/cart?id=${cartId}`,{
+      headers:{
+        method: "GET",
+      },
+    }).then(response=>response.json()).then(cart=>cart).catch(error=> new Error(error.message))
+
+    return cart
+  }else{
+    return null;
+  }
 }
