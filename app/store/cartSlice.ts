@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { CartI } from "../types";
 import { CartProduct } from "@/app/types/index";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 
 interface AddToCartPayload {
     cart_id: string;
@@ -10,17 +10,17 @@ interface AddToCartPayload {
     quantity: number;
 }
 
-export const createCart = createAsyncThunk('createCart', async () => {
-    const response = await fetch('/api/cart', { method: 'POST' });
+export const createCart = createAsyncThunk("createCart", async () => {
+    const response = await fetch("/api/cart", { method: "POST" });
     const data = await response.json();
     return data.cart_id;
 });
 
 export const addToCart = createAsyncThunk(
-    'AddProduct',
+    "AddProduct",
     async ({ product_id, cart_id, quantity }: AddToCartPayload) => {
         try {
-            const response = await fetch('/api/cart/product', {
+            const response = await fetch("/api/cart/product", {
                 method: "POST",
                 body: JSON.stringify({
                     cart_id,
@@ -40,7 +40,7 @@ export const addToCart = createAsyncThunk(
 const initialState: CartI = {
     cart: {
         id: "",
-        products: [],
+        products: [], 
         total_cost: 0,
     },
 };
@@ -57,12 +57,13 @@ export const cartSlice = createSlice({
         builder
             .addCase(createCart.fulfilled, (state, action: PayloadAction<string>) => {
                 state.cart.id = action.payload;
-                Cookies.set('cart_id', action.payload);
+                Cookies.set("cart_id", action.payload);
             })
             .addCase(addToCart.fulfilled, (state, action: PayloadAction<CartProduct>) => {
+                console.log("Payload:", action.payload);
                 state.cart.products.push(action.payload);
             });
-    }
+    },
 });
 
 export default cartSlice.reducer;

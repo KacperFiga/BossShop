@@ -17,7 +17,7 @@ export const Header = async () => {
 
   return (
     <>
-    <header className="p-2 pt-4 border-b border-6 border-gray-300 mx-auto">
+    <header className="p-2 pt-4 border-b border-6 border-gray-300 mx-auto ">
       <div className='container flex mx-auto'>
         <h1 className="cursor-pointer font-semibold italic md:text-xl flex items-center">
            <Link href="/">Boss<span className="text-secondary">Zone</span> </Link>

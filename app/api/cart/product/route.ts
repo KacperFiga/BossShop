@@ -23,6 +23,8 @@ export const POST = async (req: Request) => {
           throw new Error('To update product quantity in cart, use patch method')
         }
 
+
+        console.log(cart_id, product_id)
       
         return await prisma.cartProduct.create({
           data: {
@@ -86,7 +88,7 @@ export const PATCH = async (req: Request) => {
     const productExists = await checkProductExists(product_id);
     if (!productExists) throw new Error("Product not found");
 
-    const isProductInCart = await checkIsProductAlreadyInCart(cart_id, product_id);
+    const isProductInCart = await checkIsProductAlreadyInCart({cart_id, product_id});
 
     if (isProductInCart) {
       const updatedProduct = await updateProductQuantity({cart_id, product_id, quantity:Number(quantity)});
