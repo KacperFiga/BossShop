@@ -5,6 +5,8 @@ import { AppDispatch, RootState } from '@/app/store/store';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import Cookies from 'js-cookie';
+
 interface AddToCartSectionProps {
   productId: string;
 }
@@ -37,7 +39,7 @@ export const AddToCartSection = ({ productId }: AddToCartSectionProps) => {
   };
 
   const handleAddToCart = async () => {
-    let _cartId = cartId || localStorage.getItem('cart_id');
+    let _cartId = cartId || Cookies.get('cart_id');
 
     if (!_cartId) {
       const resultAction = await dispatch(createCart());

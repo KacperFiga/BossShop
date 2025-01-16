@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { CartI } from "../types";
 import { CartProduct } from "@/app/types/index";
+import Cookies from 'js-cookie';
 
 interface AddToCartPayload {
     cart_id: string;
@@ -58,7 +59,7 @@ export const cartSlice = createSlice({
     extraReducers:(builder)=>{
         builder.addCase(createCart.fulfilled, (state, action:PayloadAction<string>)=>{
             state.cart.id = action.payload;
-            localStorage.setItem('cart_id', action.payload);
+            Cookies.set('cart_id', action.payload);
         }).addCase(addToCart.fulfilled, (state, action:PayloadAction<CartProduct>)=>{
             state.cart.products.push(action.payload)
         })
