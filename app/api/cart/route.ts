@@ -29,7 +29,11 @@ export async function POST(req: Request) {
             include: {
                 products: {
                     include: {
-                        Product: true,
+                        Product:{
+                            include:{
+                                images: true
+                            }
+                        }
                     },
                 },
             },
