@@ -55,8 +55,8 @@ export const CartSidebar = () => {
 
         <div className="flex flex-col">
         <div>
-          { cart?.products?.length > 0 ? 
-            cart?.products.map(product=>(
+          { cart.products.length > 0 ? 
+            cart.products.map(product=>(
              <CartSidebarProduct product={product} key={product.id} cart_id={cart.id}/>
             ))
           : <p>Add products to Your shopping bag</p>}

@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { QuantitySection } from '../../Product/AddToCartSection/QuantitySection';
 import debounce from 'lodash.debounce';
-import { sendUpdateProductQuantity, updateProductQuantity } from '@/app/utils/cart';
+import { sendUpdateProductQuantity } from '@/app/utils/cart';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/app/store/store';
 import { changeProductQty } from '@/app/store/cartSlice';
@@ -41,7 +41,7 @@ useEffect(()=>{
     <div>
       <div className="flex my-4 w-full">
         <div className="rounded-lg w-[90px] h-[90px] min-h-[90px] min-w-[90px]">
-          <Link href={`/product/${product.Product.id}`}>
+          <Link href={`/product/${product.productId.id}`}>
             {product.Product?.images?.length > 0 ? (
               <Image
                 src={product.Product.images[0].url}

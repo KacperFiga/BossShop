@@ -32,7 +32,7 @@ export const AddToCartSection = ({ productId }: AddToCartSectionProps) => {
 
   const handleAddToCart = async () => {
     let _cartId = cartId || Cookies.get('cart_id');
-    const productIndex = await productInCart();
+    const productIndex = products.length > 0 ? await productInCart() : -1;
 
     if (!_cartId) {
       const resultAction = await dispatch(createCart());
@@ -41,7 +41,7 @@ export const AddToCartSection = ({ productId }: AddToCartSectionProps) => {
       }
     }
     if (_cartId) {
-      if(productIndex > -1){
+      if(productIndex > -1){        
         const product = await sendUpdateProductQuantity({product_id: productId, cart_id: _cartId, quantity: products[productIndex].quantity + qty})
         dispatch(changeProductQty({product_id:productId, quantity:product.product.quantity}))
       }else{

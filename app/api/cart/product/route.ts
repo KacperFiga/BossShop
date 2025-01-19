@@ -23,16 +23,30 @@ export const POST = async (req: Request) => {
           throw new Error('To update product quantity in cart, use patch method')
         }
 
-        return await prisma.cartProduct.create({
+        const { id } = await prisma.cartProduct.create({
           data: {
             cartId: cart_id,
             productId: product_id,
             quantity: Number(quantity),
           },
         });
-      });
 
-        return new Response(JSON.stringify({'product':product }),{status:201})
+        return await prisma.cartProduct.findUnique(
+          {
+            where:{
+              id
+            },
+            include: {
+                Product:{
+                    include:{
+                        images: true
+                    }
+                }
+            },
+          })
+      });
+      
+      return new Response(JSON.stringify({'product': product }),{status:201})
 
     }catch(err){
         console.error(err.message)
