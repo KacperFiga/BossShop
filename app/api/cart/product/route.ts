@@ -23,9 +23,6 @@ export const POST = async (req: Request) => {
           throw new Error('To update product quantity in cart, use patch method')
         }
 
-
-        console.log(cart_id, product_id)
-      
         return await prisma.cartProduct.create({
           data: {
             cartId: cart_id,

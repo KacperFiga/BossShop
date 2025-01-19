@@ -60,7 +60,6 @@ export const cartSlice = createSlice({
                 Cookies.set("cart_id", action.payload);
             })
             .addCase(addToCart.fulfilled, (state, action: PayloadAction<CartProduct>) => {
-                console.log("Payload:", action.payload);
                 state.cart.products.push(action.payload);
             });
     },
