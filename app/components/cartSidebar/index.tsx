@@ -12,12 +12,12 @@ import { CartSidebarProduct } from './CartSideBarProduct';
 export const CartSidebar = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const dispatch = useDispatch();
-  const {cart} = useSelector((state: RootState) => state.cart.cart);
+  const cart = useSelector((state: RootState) => state.cart.cart);
 
   const handleCart = async() =>{
-    const cart = await getCart()
-    if(cart){
-      dispatch(setCart(cart));
+    const data = await getCart()
+    if(data?.cart){
+      dispatch(setCart(data.cart));
     }
   }
 
@@ -57,7 +57,7 @@ export const CartSidebar = () => {
         <div>
           { cart?.products?.length > 0 ? 
             cart?.products.map(product=>(
-             <CartSidebarProduct product={product} key={product.id} />
+             <CartSidebarProduct product={product} key={product.id} cart_id={cart.id}/>
             ))
           : <p>Add products to Your shopping bag</p>}
         </div>

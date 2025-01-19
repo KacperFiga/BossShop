@@ -1,16 +1,41 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { QuantitySection } from '../../Product/AddToCartSection/QuantitySection';
+import debounce from 'lodash.debounce';
+import { sendUpdateProductQuantity, updateProductQuantity } from '@/app/utils/cart';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '@/app/store/store';
+import { changeProductQty } from '@/app/store/cartSlice';
 
 
-
-export const CartSidebarProduct = ({ product }) => {
+export const CartSidebarProduct = ({ product, cart_id }) => {
 
 const [qty, setQty] = useState<number>(0)
 
+const dispatch = useDispatch<AppDispatch>();
+
+const updateQty = useCallback(
+    debounce(async (qty) => {
+    await sendUpdateProductQuantity({product_id:product.Product.id, cart_id, quantity:qty})
+      dispatch(changeProductQty({product_id:product.Product.id, cart_id: cart_id, quantity: qty}))
+    }, 500),
+    []
+  );
+
+
+useEffect(()=>{
+    if (qty !== product.quantity && qty !== 0) {
+        updateQty(qty);
+    }
+},[qty])
+
+
+useEffect(()=>{
+    setQty(()=>product.quantity)
+},[product.quantity])
 
   return (
     <div>

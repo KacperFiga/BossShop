@@ -33,7 +33,7 @@ export const QuantitySection:React.FC<QuantitySectionPropsI> = ({qty, setQty, va
   };
 
   return (
-    <div className={`flex border-black border-[2px] rounded-xl h-full w-full  ${variant==="SIDEBAR" ? 'w-[60px] m-0': 'md:mr-[20px] w-full md:w-auto mb-3 mt-6 md:my-0 '} `}>
+    <div className={`flex border-black border-[2px] rounded-xl h-full   ${variant==="SIDEBAR" ? 'w-[60px] m-0': 'md:mr-[20px] w-full md:w-auto mb-3 mt-6 md:my-0 '} `}>
     <button
       className={`relative  w-[30px] h-[30px] flex justify-center rounded-xl items-center bg-transparent text-black rounded-l-xl z-20 transition ${
         qty === 1 ? 'text-gray-400 cursor-not-allowed' : 'hover:text-secondary-600'

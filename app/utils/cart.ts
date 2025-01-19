@@ -28,7 +28,7 @@ export const checkIsProductAlreadyInCart = async ({cart_id, product_id}: checkIs
         where:{
           cartId_productId: {
             cartId: cart_id,
-            productId: product_id,
+            productId: product_id
           },
         }
       })
@@ -37,12 +37,13 @@ export const checkIsProductAlreadyInCart = async ({cart_id, product_id}: checkIs
 
 export const updateProductQuantity = async ({cart_id, product_id, quantity}:updateProductQuantityI) =>{
     const _product = await prisma.cartProduct.update({
-        where:{
-          cartId_productId:{
-            cartId: cart_id,
-            productId:product_id
-          }
+      where:{
+        cartId_productId: {
+          cartId: cart_id,
+          productId: product_id
         },
+      }, 
+      
         data:{
           quantity: quantity
         }
@@ -58,9 +59,29 @@ export const getCart = async () => {
         method: "GET",
       },
     }).then(response=>response.json()).then(cart=>cart).catch(error=> new Error(error.message))
-
     return cart
   }else{
     return null;
   }
+}
+
+export const sendUpdateProductQuantity = async ({product_id, cart_id, quantity}) =>{
+  const result = await fetch('/api/cart/product',{
+    method: "PATCH",
+    body: JSON.stringify({
+        product_id,
+        cart_id,
+        quantity,
+    })
+  }).then(res=>{
+    const data = res.json()
+    return data;
+  }).then(data=>{
+    return data;
+    
+  }).catch(error=>{
+    console.error(`something went wrong ${error.message}`)
+  })
+
+  return result
 }

@@ -82,9 +82,6 @@ export const PATCH = async (req: Request) => {
     const cart = await checkCartExists(cart_id);
     if (!cart) throw new Error("Cart not found");
 
-    const productExists = await checkProductExists(product_id);
-    if (!productExists) throw new Error("Product not found");
-
     const isProductInCart = await checkIsProductAlreadyInCart({cart_id, product_id});
 
     if (isProductInCart) {

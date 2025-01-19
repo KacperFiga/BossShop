@@ -52,6 +52,21 @@ export const cartSlice = createSlice({
         setCart(state, action) {
             state.cart = action.payload;
         },
+        changeProductQty(state, action) {
+            const { product_id, quantity } = action.payload;
+
+
+            const productIndex = state.cart.products.findIndex(
+                (product) => product.Product.id === product_id
+            );
+
+            if (productIndex !== -1) {
+                state.cart.products[productIndex] = {
+                    ...state.cart.products[productIndex],
+                    quantity, 
+                };
+            }
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -66,4 +81,4 @@ export const cartSlice = createSlice({
 });
 
 export default cartSlice.reducer;
-export const { setCart } = cartSlice.actions;
+export const { setCart, changeProductQty } = cartSlice.actions;
