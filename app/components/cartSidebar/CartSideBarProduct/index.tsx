@@ -8,7 +8,8 @@ import debounce from 'lodash.debounce';
 import { sendUpdateProductQuantity } from '@/app/utils/cart';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/app/store/store';
-import { changeProductQty } from '@/app/store/cartSlice';
+import { changeProductQty, removeProductFromCart } from '@/app/store/cartSlice';
+import { Icon } from '@iconify/react/dist/iconify.js';
 
 
 export const CartSidebarProduct = ({ product, cart_id }) => {
@@ -25,6 +26,10 @@ const updateQty = useCallback(
     []
   );
 
+
+const handleRemoveProductFromCart = async () =>{
+  const response = await dispatch(removeProductFromCart({product_id:product.productId, cart_id}))
+}
 
 useEffect(()=>{
     if (qty !== product.quantity && qty !== 0) {
@@ -71,7 +76,10 @@ useEffect(()=>{
             </p>
           </div>
 
-          <div className="w-full flex items-center">
+          <div className="w-full flex items-center gap-[2px]">
+            <button className="mr-[2px]" onClick={handleRemoveProductFromCart}>
+             <Icon icon="tabler:trash" width="20" height="20"  style={{color: '#cd3737'}} />
+            </button>
             <QuantitySection qty={qty} setQty={setQty} variant='SIDEBAR'/>
             <p className="font-bold ml-auto block text-[16px]">
               {product.Product.promo_price > 0

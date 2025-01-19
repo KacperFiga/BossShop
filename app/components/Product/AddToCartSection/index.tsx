@@ -23,12 +23,6 @@ export const AddToCartSection = ({ productId }: AddToCartSectionProps) => {
   const {id:cartId, products} = cart
 
   const productInCart = async () => products.findIndex(product=>product.Product.id==productId);
-  
-  useEffect(()=>{
-    console.log(cart, 'cart')
-  },[cart])
-
-
 
   const handleAddToCart = async () => {
     let _cartId = cartId || Cookies.get('cart_id');

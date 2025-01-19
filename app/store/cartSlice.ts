@@ -10,6 +10,10 @@ interface AddToCartPayload {
     quantity: number;
 }
 
+interface RemoveFromCartPayload {
+    productId: string;
+}
+
 export const createCart = createAsyncThunk("createCart", async () => {
     const response = await fetch("/api/cart", { method: "POST" });
     const data = await response.json();
@@ -37,6 +41,23 @@ export const addToCart = createAsyncThunk(
     }
 );
 
+
+export const removeProductFromCart = createAsyncThunk(
+    "removeProductFromCart",
+    async ({ product_id, cart_id }: RemoveFromCartPayload) => {
+        const response = await fetch("/api/cart/product", {
+            method: "DELETE",
+            body: JSON.stringify({
+                cart_id,
+                product_id,
+            }),
+        });
+        const data = await response.json();
+        return { productId: product_id };
+    }
+);
+
+
 const initialState: CartI = {
     cart: {
         id: "",
@@ -57,7 +78,7 @@ export const cartSlice = createSlice({
 
 
             const productIndex = state.cart.products.findIndex(
-                (product) => product.Product.id === product_id
+                (product) => product.productId === product_id
             );
 
             if (productIndex !== -1) {
@@ -76,7 +97,9 @@ export const cartSlice = createSlice({
             })
             .addCase(addToCart.fulfilled, (state, action: PayloadAction<CartProduct>) => {
                 state.cart.products.push(action.payload);
-            });
+            }).addCase(removeProductFromCart.fulfilled, (state, action: PayloadAction<RemoveFromCartPayload>)=>{
+                state.cart.products = state.cart.products.filter(product=>product.productId!==action.payload.productId)
+            })
     },
 });
 
