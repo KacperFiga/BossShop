@@ -48,9 +48,9 @@ export const POST = async (req: Request) => {
       
       return new Response(JSON.stringify({'product': product }),{status:201})
 
-    }catch(err){
-        console.error(err.message)
-        return new Response(JSON.stringify({'message':err.message}),{status:400})
+    }catch(error){
+        const message = (error as Error).message;
+        return new Response(JSON.stringify({'message':message}),{status:400})
 
     }
 }
@@ -83,8 +83,9 @@ export const DELETE = async (req: Request) => {
 
     return new Response(JSON.stringify({ message: "Product removed successfully", result }), { status: 200 });
   } catch (error) {
-    console.error("Error:", error);
-    return new Response(JSON.stringify({ message: error.message || "Unable to delete product" }), { status: 400 });
+    const message = (error as Error).message;
+    console.error("Error:", message);
+    return new Response(JSON.stringify({ message: message || "Unable to delete product" }), { status: 400 });
   }
 };
 
@@ -104,7 +105,7 @@ export const PATCH = async (req: Request) => {
     }
 
   } catch (error) {
-    console.error(error.message);
-    return new Response(JSON.stringify({ 'message': "Something went wrong" }), { status: 500 });
+    const message = (error as Error).message
+    return new Response(JSON.stringify({ 'message': `Something went wrong: ${message}` }), { status: 500 });
   }
 };

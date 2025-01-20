@@ -12,6 +12,12 @@ interface updateProductQuantityI {
   quantity: number
 }
 
+interface sendUpdateProductQuantityI{
+  product_id: string;
+  cart_id: string;
+  quantity: number;
+}
+
 
 export const checkCartExists = async (cart_id:string)=>{
     const cart = await prisma.cart.findUnique({ where: { id: cart_id } });
@@ -65,7 +71,7 @@ export const getCart = async () => {
   }
 }
 
-export const sendUpdateProductQuantity = async ({product_id, cart_id, quantity}) =>{
+export const sendUpdateProductQuantity = async ({product_id, cart_id, quantity}:sendUpdateProductQuantityI) =>{
   const result = await fetch('/api/cart/product',{
     method: "PATCH",
     body: JSON.stringify({

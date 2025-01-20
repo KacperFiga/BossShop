@@ -65,9 +65,8 @@ model CategoriesOnProducts {
 }
 
 model Cart {
-  id         String        @id @default(uuid())
-  products   CartProduct[]
-  total_cost Int           @default(0)
+  id       String        @id @default(uuid())
+  products CartProduct[]
 }
 
 model CartProduct {
