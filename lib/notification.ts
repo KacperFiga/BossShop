@@ -1,12 +1,15 @@
-
 import { toast } from "react-toastify";
 
 interface createNotificationPropsI {
-    type: "error" | "success"
-    message: string;
+  type: "error" | "success";
+  message: string;
 }
 
-export const createNotification = ({type,message}:createNotificationPropsI) => toast(message,{
+export const createNotification = ({
+  type,
+  message,
+}: createNotificationPropsI) =>
+  toast(message, {
     position: "bottom-right",
     autoClose: 5000,
     hideProgressBar: false,
@@ -15,5 +18,5 @@ export const createNotification = ({type,message}:createNotificationPropsI) => t
     draggable: true,
     progress: undefined,
     type: `${type}`,
-    theme: "dark"
-})
+    theme: "dark",
+  });
