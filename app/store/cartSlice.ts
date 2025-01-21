@@ -3,6 +3,8 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { CartI } from "../types";
 import { CartProduct } from "@/app/types/index";
 import Cookies from "js-cookie";
+import { createNotification } from "@/lib/notification";
+
 
 interface AddToCartPayload {
     cart_id: string;
@@ -12,6 +14,11 @@ interface AddToCartPayload {
 
 interface RemoveFromCartPayload {
     productId: string;
+}
+
+interface removeProductFromCartPropsI{
+    product_id: string;
+    cart_id: string
 }
 
 export const createCart = createAsyncThunk("createCart", async () => {
@@ -33,6 +40,7 @@ export const addToCart = createAsyncThunk(
                 }),
             });
             const {product} = await response.json();
+            createNotification({type:'success', message:'Product added to cart'});
             return product;
         } catch (error: any) {
             console.log(error.message);
@@ -44,15 +52,21 @@ export const addToCart = createAsyncThunk(
 
 export const removeProductFromCart = createAsyncThunk(
     "removeProductFromCart",
-    async ({ product_id, cart_id }: RemoveFromCartPayload) => {
-        const response = await fetch("/api/cart/product", {
+    async ({ product_id, cart_id }: removeProductFromCartPropsI) => {
+        await fetch("/api/cart/product", {
             method: "DELETE",
             body: JSON.stringify({
                 cart_id,
                 product_id,
             }),
-        });
-        const data = await response.json();
+        }).then(response=>{
+            createNotification({type: 'success', message:'Product removed from cart'})
+            return response;
+        }).catch(error=>{
+            createNotification({type:'error', message:'Unable to remove product from cart'})
+            throw Error(error.message)
+        })
+
         return { productId: product_id };
     }
 );

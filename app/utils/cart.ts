@@ -1,4 +1,5 @@
 import prisma from "@/lib/db"
+import { createNotification } from "@/lib/notification";
 import Cookie from "js-cookie"
 
 interface checkIsProductAlreadyInCartI {
@@ -64,7 +65,11 @@ export const getCart = async () => {
       headers:{
         method: "GET",
       },
-    }).then(response=>response.json()).then(cart=>cart).catch(error=> new Error(error.message))
+    }).then(response=>response.json()).then(cart=>cart)
+    .catch(error=>{
+      createNotification({type:'error', message:"Unable to get cart"})
+      new Error(error.message)}
+      )
     return cart
   }else{
     return null;
