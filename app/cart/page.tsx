@@ -1,7 +1,5 @@
-import React from 'react'
+import React from "react";
 
 export default () => {
-  return (
-    <div>cart</div>
-  )
-}
+  return <div>cart</div>;
+};
