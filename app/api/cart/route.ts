@@ -2,19 +2,28 @@ import { PrismaClient } from "@prisma/client";
 
 import { CartProduct } from "@/app/types";
 
+interface CartI {
+  id: string;
+  products: CartProduct[];
+  total_products: number;
+}
+
 const prismaCart = new PrismaClient().$extends({
   result: {
     cart: {
       total_products: {
-        compute(cart: CartProduct) {
+        compute(cart: CartI) {
           if (cart.products.length > 0) {
-            const total = cart.products.reduce((sum, cartProduct) => {
-              const price =
-                cartProduct.Product.promo_price > 0
-                  ? cartProduct.Product.promo_price
-                  : cartProduct.Product.regular_price;
-              return sum + price * cartProduct.quantity;
-            }, 0);
+            const total = cart.products.reduce(
+              (sum: number, cartProduct: CartProduct) => {
+                const price =
+                  cartProduct.Product.promo_price > 0
+                    ? cartProduct.Product.promo_price
+                    : cartProduct.Product.regular_price;
+                return sum + price * cartProduct.quantity;
+              },
+              0
+            );
             return total;
           } else {
             return 0;
@@ -73,10 +82,11 @@ export async function GET(req: Request) {
       });
     }
 
-    const { total } = cart;
-    console.log(total, "total");
+    const { total_products } = cart;
 
-    return new Response(JSON.stringify({ cart, total }), { status: 200 });
+    return new Response(JSON.stringify({ cart, total_products }), {
+      status: 200,
+    });
   } catch (error) {
     console.error("Error fetching cart:", error);
     return new Response(JSON.stringify({ error: "Failed to fetch cart" }), {
