@@ -42,9 +42,7 @@ export const CartSidebar = () => {
           className={
             "absolute top-0 left-0 bg-black w-full h-full z-10 bg-opacity-20"
           }
-        >
-          {" "}
-        </div>
+        ></div>
       ) : null}
 
       <div
@@ -87,7 +85,7 @@ export const CartSidebar = () => {
             <div className=" mt-auto items-end border-t py-2">
               <div className="flex justify-between font-bold">
                 <p> Products in total: </p>
-                <p> {cart?.total_cost} </p>
+                <p> {cart?.total_products} PLN </p>
               </div>
               <p className="text-gray-700 mt-2 text-sm">
                 Delivery costs will be added in the summary.
@@ -96,15 +94,13 @@ export const CartSidebar = () => {
                 href="/cart"
                 className=" mt-4 w-full block text-center bg-secondary-700 text-white rounded-md text-md p-[5px] font-semibold hover:bg-secondary-800 transition"
               >
-                {" "}
-                Go to cart{" "}
+                Go to cart
               </Link>
               <button
                 className="w-full text-center mt-2 text-gray-700 text-sm"
                 onClick={toggleIsOpen}
               >
-                {" "}
-                or continue shopping{" "}
+                or continue shopping
               </button>
             </div>
           </div>

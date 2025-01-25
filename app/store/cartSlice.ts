@@ -81,7 +81,7 @@ const initialState: CartI = {
   cart: {
     id: "",
     products: [],
-    total_cost: 0,
+    total_products: 0,
   },
 };
 

@@ -68,6 +68,6 @@ interface CartI {
   cart: {
     id: string;
     products: CartProduct[];
-    total_cost: number;
+    total_products: number;
   };
 }
